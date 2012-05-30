@@ -1,0 +1,78 @@
+$def with (main_stuff, site_menu, javascript, base_url, title)
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1.0-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>$title</title>
+<link href="$base_url/theme1.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<script type="text/javascript" src="$base_url/MochiKit.js"></script>
+<script type="text/javascript" src="$base_url/DragAndDrop.js"></script>
+<script type="text/javascript" src="$base_url/dialogBox.js"></script>
+<script type="text/javascript" src="$base_url/blog_my.js"></script>
+<script type="text/javascript" src="$base_url/SWFUpload/mmSWFUpload.js"></script>
+
+<script type="text/javascript">
+<!--
+$javascript
+//--></script>
+
+
+<div id="body_border">
+
+
+<div id="title_box">
+
+<div id="title_itself">
+&nbsp;
+</div>
+
+<div id="login_status" style="display:none;">
+session info
+</div>
+
+<!-- If you comment out the "login_link" div below, blog_my 
+will use a "magic-click" to make the login prompt appear 
+(a shift-click on the top area of the page).
+-->
+<div id="login_link"></div>
+
+<div id="login_box" style="display:none;">
+</div>
+
+<ul id="site_menu">
+$:site_menu
+</ul>
+
+
+</div><!-- title_box -->
+
+<!--
+<div class="sidebar" id="sidebar" style="background-color:#ffffff;color:#000000;">
+
+
+<div class="sidebar_inner" style="background-color:#ffffff;color:#000000;">
+sidebar
+</div>
+
+</div>  
+-->
+
+<div id="main_area" style="margin-top:10px;">
+<div id="add_item_link"> </div>
+$:main_stuff
+</div>
+
+<div id="edit_area">
+<br style="clear:both;"/>
+</div>
+
+</div><!-- body_border -->
+
+</body>
+</html>
