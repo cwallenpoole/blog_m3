@@ -856,9 +856,6 @@ class update_item:
       success = False
       messages.append('[E] Not logged in!')
     else:
-     
-      for k in i:  # convert input to unicode
-        i[k] = str(str(i[k]),'utf-8', 'replace')
 
       item = load_item_by_id(item_id)[0]
       if item == None:
