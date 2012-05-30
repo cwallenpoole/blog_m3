@@ -323,6 +323,8 @@ def get_item_url(item_type, item_id):
   return options['base_url']+'/view/'+item_id
 
 def feed_wrap(item, contents):
+  if isinstance(contents, bytes):
+     contents = contents.decode('utf-8')
   headline = ''
   updated = time.strftime('%Y-%b-%mT%H:%M:%S%Z', time.gmtime(item.timestamp))
 
@@ -340,7 +342,7 @@ def feed_wrap(item, contents):
      'link':options['base_url']+'/view/'+item.id,
      'contents':contents,
      'updated':updated}
-  return results
+  return str(results)
   
 def get_filedata(path='files'):
   filenames = os.listdir(path)
@@ -540,11 +542,6 @@ class view:
           main_stuff += feed_wrap(item, rendered)
         else:
           main_stuff += rendered
-
-    try:
-      main_stuff = main_stuff.encode('utf-8', 'replace')
-    except UnicodeDecodeError:
-      main_stuff = str(main_stuff,'utf-8', 'replace')
       
     
     if i.feed:
