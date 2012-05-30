@@ -24,7 +24,7 @@ urls = (
     '/update_comment/','update_comment',
     '/delete_comment/','delete_comment',
     '/(.+)', 'view_page',
-    '/(.*)', 'default'
+    '/?()', 'default'
 )
 
 item_types.append('page')
@@ -1129,9 +1129,10 @@ if options['fastcgi'] == True:
   web.wsgi.runwsgi = runfcgi_apache
 
 render = web.template.frender('blog_my.html')
- 
-if __name__ == "__main__":
-    print('')
+
+def basic():
     web.run(urls,globals())
-    web.webapi.render()
-  #web.run(urls,globals(),web.profiler)
+
+if __name__ == "__main__":
+    basic()
+    #web.run(urls,globals(),web.profiler)
