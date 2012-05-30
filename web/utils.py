@@ -27,7 +27,7 @@ import re, sys, time, threading
 try: import datetime
 except ImportError: pass
 
-def log(msg, fl = '/Applications/XAMPP/htdocs/blog_my/logfile.txt', reset = 0):
+def log(msg, fl = './logfile.txt', reset = 0):
     f = open(fl, 'w' if reset else 'a')
     f.write('''
 

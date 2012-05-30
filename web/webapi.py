@@ -320,7 +320,7 @@ def wsgifunc(func, *middleware):
         except StopIteration:
             result = None
         except:
-            print(traceback.format_exc(), file=debug)
+            print(traceback.format_exc(), file=sys.stderr)
             result = internalerror()
         
         is_generator = result and hasattr(result, 'next')
