@@ -768,6 +768,7 @@ def safemarkdown(text):
     """
     from markdown import markdown
     if text:
+        return text
         text = text.replace('<', '&lt;')
         # TODO: automatically get page title?
         text = r_url.sub(r'<\1>', text)

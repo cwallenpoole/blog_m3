@@ -351,7 +351,7 @@ class TeeOutputStream(object):
     def flush(self):
         for f in self._streamList:
             f.flush()
-
+import locale
 class StdoutWrapper(object):
     """
     Wrapper for sys.stdout so we know if data has actually been written.
@@ -366,7 +366,7 @@ class StdoutWrapper(object):
             if data[0:2] + data[-1] == "b''":
                 #data = data[2:-2]
                 pass
-        self._file.write(data)
+        self._file.write(data.encode(locale.getpreferredencoding(), 'replace').decode())
 
     def writelines(self, lines):
         for line in lines:

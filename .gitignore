@@ -1,5 +1,10 @@
 *.py[co]
-
+pages/*
+posts/*
+favicon.ico
+quotes/*
+session*
+page*.xml
 # Packages
 *.egg
 *.egg-info

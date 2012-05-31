@@ -241,7 +241,7 @@ function edit_item(item_id, item, evt) {
     unescaped_field_value = unescaped_field_value.replace(/>/g,'&gt;');
 
     edit_text += '<div class="edit_field">';
-    if (hasnewlines || edit_item[item_field].length > 100)
+    if (hasnewlines || edit_item[item_field].length > 100||1)
       edit_text += '<label for="'+field_id+'">'+item_field+':</label><textarea id="'+field_id+'" style="height:20em;">'+unescaped_field_value+'</textarea>';
     else {
       var quoted_field_value = field_value.replace(/"/g,'&quot;');

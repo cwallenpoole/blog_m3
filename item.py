@@ -16,6 +16,7 @@ class item:
     meta = xml_quick_extract(xml, 'meta')[0]
     self.disable_comments = bool(xml_quick_extract(meta, 'disable_comments')[0])
     self.draft = bool(xml_quick_extract(meta, 'draft')[0])
+    if not '</meta>' in xml: return xml, meta, ''
     start = xml.index('</meta>')
     body = xml[start+7:]
     return xml, meta, body

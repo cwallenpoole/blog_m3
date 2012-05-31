@@ -1,4 +1,12 @@
 #!/usr/local/bin/python3 -O
+import locale,sys
+'''
+
+print('\n\n {0}\n{1}\n'.format(repr(dir(locale)), repr(dir(sys))))
+print('\n\n')
+print(locale.getpreferredencoding())
+sys.exit(0)
+# '''
 from config import *
 from blog_my_lib import *
 import sys,urllib.request,urllib.parse,urllib.error,os,stat,re,time,datetime,math,random,fcntl,codecs,shutil  # python modules
@@ -78,10 +86,11 @@ def load_item_by_id(item_id):
     else:
       filename = item_type_plural+'/'+item_type+'_'+item_id+'.xml'
     if os.path.isfile(filename):
-      FILE = open(filename, 'r')
+      FILE = open(filename, 'rb')
       contents = FILE.readlines()
       FILE.close()
-      contents = ''.join(contents)
+      res = [i.decode('ascii', 'ignore') for i in contents]
+      contents = ''.join(res)
       item = item_modules[item_type].new(item_id,os.path.getmtime(filename))
       item.loadfromxml(contents)
       return (item, item_type)
@@ -165,10 +174,11 @@ def load_item(item_type, filename):
   filename = item_types_plural[item_type]+'/'+filename
   
   if os.path.isfile(filename):
-    FILE = open(filename, 'r')
+    FILE = open(filename, 'rb')
     contents = FILE.readlines()
     FILE.close()
-    contents = ''.join(contents)
+    res = [i.decode('ascii', 'replace') for i in contents]
+    contents = ''.join(res)
     item = item_modules[item_type].new(item_id,os.path.getmtime(filename))
     item.loadfromxml(contents)
     return item
