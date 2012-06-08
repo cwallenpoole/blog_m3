@@ -595,9 +595,6 @@ class preview:
     new_item = item_modules[item_type].new(new_id)
     i.pop('__item_type__')
  
-    for k in i:  # convert input to unicode
-      i[k] = str(str(i[k]),'utf-8', 'replace')
- 
     new_item.__dict__.update(i)
     main_stuff = new_item.render()
     

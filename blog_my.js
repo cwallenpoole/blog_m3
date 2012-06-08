@@ -345,7 +345,8 @@ function add_item(item_type, evt) {
       item_field = item_fields[item_type][item_field_index];
       var field_id = 'edit_field_'+item_field;
       edit_text += '<div class="edit_field">';
-      if (item_type == 'page' && item_field == 'contents')
+      if ((item_type == 'page' && item_field == 'contents') ||
+      	  (item_type == 'post' && item_field == 'body'))
         edit_text += '<label for="'+field_id+'">'+item_field+':</label><textarea id="'+field_id+'" style="height:20em;"></textarea>';
       else
         edit_text += '<label for="'+field_id+'">'+item_field+':</label><input id="'+field_id+'" type="text" value=""/>';
