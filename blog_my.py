@@ -1,12 +1,15 @@
 #!/usr/local/bin/python3 -O
 import locale,sys
-'''
 
-print('\n\n {0}\n{1}\n'.format(repr(dir(locale)), repr(dir(sys))))
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+'''
+import _locale
 print('\n\n')
-print(locale.getpreferredencoding())
+print(locale.getdefaultlocale())
+print(locale.getlocale())
 sys.exit(0)
 # '''
+
 from config import *
 from blog_my_lib import *
 import sys,urllib.request,urllib.parse,urllib.error,os,stat,re,time,datetime,math,random,fcntl,codecs,shutil  # python modules
@@ -983,17 +986,24 @@ class add_comment:
     i = web.input('item_id','text',by='Anonymous',link='',t=0)
     item_id = i.item_id
     
-    for k in i:  # convert input to unicode
-      i[k] = str(str(i[k]),'utf-8', 'replace')
-    
     (item, item_type) = load_item_by_id(item_id)
     item_comments = load_comments(item_id, item_type)
 
     new_comment = comments.comment()
     new_comment.id = int(comments.get_max_id(item_comments))+1
-    new_comment.text = i.text
-    new_comment.by = i.by
-    new_comment.link = i.link
+    
+    import re, urllib, cgi
+    text = re.sub('<([^a])',lambda x: '&lt;'+x.group(1),i.text).replace('&lt;/a','</a')
+    test = text.split('<a');
+    for j in range(1,len(test)):
+        item = test[j]
+        if item.find('>') < 0:# or item.find('>') > item.find('</a') or item.find('</a>') < 0 or item.find('javascript'):
+            test[j] = '&lt;a' + item
+        else:
+            test[j] = '<a' + item
+    new_comment.text = ''.join(test)
+    new_comment.by = cgi.escape(i.by)
+    new_comment.link = urllib.parse.quote(i.link)
     new_comment.item_id = i.item_id
     
     valid = True
@@ -1137,3 +1147,4 @@ def basic():
 if __name__ == "__main__":
     basic()
     #web.run(urls,globals(),web.profiler)
+

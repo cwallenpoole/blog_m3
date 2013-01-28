@@ -1,6 +1,7 @@
 import time,urllib.request,urllib.parse,urllib.error,fcntl,codecs
 from config import *
 from blog_my_lib import *
+from re import escape, compile, sub
 
 class item:
   def __init__(self, new_id, timestamp):
@@ -50,6 +51,10 @@ class item:
       return str(text,'utf-8', 'replace')
 
   def really_save(self, filename, meta='', data=''):
+    ent = {chr(i):'&#' + str(i) + ';' for i in range(128,1024)}
+    ent.update({chr(i):'&#' + str(i) + ';' for i in range(8000,9999)})
+    ent.update({'\n\n':'\n</p>\n<p>\n','...':'&hellip;'})
+    regex = compile("(%s)" % "|".join(map(escape, ent.keys())))
     item.unicodeify_all(self)
     contents = ''
     contents += '<meta>\n'
@@ -57,9 +62,13 @@ class item:
       contents += '<disable_comments>'+str(int(self.disable_comments))+'</disable_comments>\n'
     if self.draft:
       contents += '<draft>'+str(int(self.draft))+'</draft>\n'
-    contents += meta
+    contents += regex.sub(lambda mo: ent[mo.string[mo.start():mo.end()]], meta)
     contents += '</meta>\n'
-    contents += data
+    
+    #FIXME: This logic REALLY belongs elsewhere.
+    if data[0:3] != '<p>':
+        data = '<p>' + data + '</p>'
+    contents += regex.sub(lambda mo: ent[mo.string[mo.start():mo.end()]], data)
   
     FILE = codecs.open(filename, 'w', "utf-8")
     fcntl.flock(FILE, fcntl.LOCK_EX)
